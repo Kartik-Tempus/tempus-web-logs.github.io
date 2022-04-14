@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GCP Logs</title>
+<meta charset="UTF-8">
+<meta name="description" content="GCP Logs and Queries">
+<meta name="keywords" content="GCP Logs, Queries">
+<meta name="author" content="Kartik Desai">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/prism.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+<header>
+<a href="https://console.cloud.google.com/logs">GCP Logs</a>
+<a href="https://tempus.splunkcloud.com/en-US/app/search/alerts">Splunk Logs</a>
+</header>
+<div class="main">
+<div class="side_container">
+<div class="namespaces">
+<h3>Namespaces</h3>
+<pre>
+ <p>Lens</p>
+ <code>
+ lens = "Optics" 
+ lens-cbioportal = "Cbioportal"
+ lens-glass= "Glass"
+ lens-notebooks = "Notebook"
+ </code>
+ </pre>
+</div>
+<div class="namespaces">
+ <h3>Severities</h3>
+ <pre>
+ <code>
+ severity=INFO 
+ severity=ERROR
+ severity=WARNING
+ severity=DEBUG
+ </code>
+ </pre>
+ </div>
+<div class="namespaces">
+<h3>Notebook Logs (#GCP)</h3>
+<pre>
+ <p>Basic Query</p>
+ <code>
+ resource.type="k8s_container"
+ resource.labels.namespace_name="lens-notebooks"
+ severity=ERROR
+ </code>
+ </pre>
+ <pre>
+ <p>Pod specific</p>
+ <code>
+ resource.type="k8s_container"
+ resource.labels.namespace_name="lens-notebooks"
+ severity=ERROR
+ resource.labels.pod_name="hub-98f55df4c-6pxhd"
+ </code>
+ </pre>
+</div>
+</div>
+<div class="container">
+<h3>Optics Logs (#GCP) </h3>
+<pre>
+ <p>Basic Query</p>
+ <code>
+ resource.type="k8s_container"
+ resource.labels.namespace_name="lens"
+ severity=ERROR
+ </code>
+
+ <p>Search Using Message</p>
+ <code>
+ resource.type="k8s_container"
+ resource.labels.namespace_name="lens"
+ severity=ERROR
+ jsonPayload.message="Error handling request"
+ </code>
+ <br>
+ <p>Search Using Traceback</p>
+ <code>
+ resource.type="k8s_container" 
+ resource.labels.namespace_name="lens" 
+ labels."k8s-pod/tempuslabs_com/service"="optics"
+ resource.labels.cluster_name="prd-env-cluster"
+ (jsonPayload.traceback=~"No Inbound Link exists for Outbound Link")
+ </code>
+ <p> optics db-migration</p>
+ <code>
+resource.labels.pod_name=~"optics-db-migrate"
+resource.type="k8s_container"
+resource.labels.cluster_name="alp-env-cluster"
+
+For Specific Pod :- 
+
+resource.labels.pod_name=~"optics-db-migrate"
+resource.type="k8s_container"
+resource.labels.cluster_name="bet-env-cluster"
+resource.labels.pod_name="optics-db-migrate-2677f391-sns5x"
+ </code>
+ </pre>
+</div>
+<div class="right-side-container">
+<div class="namespaces">
+<h3>Splunk Logs</h3>
+<pre>
+ <p>Basic Query</p>
+ <code>
+    index="gcp-app" | search "gcpMetadata.resource.labels.cluster_name"="alp-env-cluster" "gcpMetadata.labels.k8s-pod/app_kubernetes_io/component"=optics | search "cBio"
+ </code>
+ </pre>
+</div>
+<div class="namespaces">
+ <h3>Kubectl Cheat Sheet</h3>
+
+ <pre>
+ <p>Set Up Kubectl</p>
+ <a href="https://tech-handbook.securetempus.com/infrastructure/kubernetes/kubectl/">Tech Handbook</a>
+ <code></code>
+ <p>Kuberbetes Namespaces 
+</p>
+ <span class="desc">Namespaces are Kubernetes objects which partition a single Kubernetes <br>cluster into multiple virtual clusters.</span>
+ <code>
+ Get All Namespaces - kubectl get namespace
+ Get Current Namespace - kubectl config view --minify | grep namespace:
+ Set Namespace - kubectl config set-context --current --namespace=<insert-namespace-name-here>
+ E.g kubectl config set-context --current --namespace=lens-notebooks
+ 
+ </code>
+ <p>Kuberbetes Pod 
+</p>
+ <span class="desc">Are the smallest deployable units of computing that you can create and manage in Kubernetes.</span>
+ <code>
+Get All Pods in the current namespace -  kubectl get pods
+Get All Pods in all namespaces -  kubectl get pods --all-namespaces
+Go inside a specific running pod  -  kubectl exec -it podName  -- bash
+E.g  kubectl exec -it jupyter-kartik-2edesai-40tempus-2ecom -- bash 
+ </code>
+ <p>Kuberbetes Logs 
+</p>
+ <code>
+General Logs = Kubectl logs podname
+For Live Logs = Kubectl logs -f podname  
+e.g (See Single Notebook pod live logs)
+kubectl logs -f jupyter-kartik-2edesai-40tempus-2ecom
+ </code>
+ </pre>
+ </div>
+</div>
+</div>
+<script>
+const elements = document.querySelectorAll("code");
+for (var i = 0; i < elements.length; i++) {
+ elements[i].classList.add("language-js");
+}
+</script>
+<script src="js/prism.js"></script>
+</body>
+</html>
