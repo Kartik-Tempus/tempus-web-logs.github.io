@@ -12,22 +12,31 @@ p {
 }
 a{
     font-size:20px;
+    color: blue;
+}
+
+a:visited {
+    color: blue;
+  }
+h3{
+    background-color: white;
 }
 header {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 100px;
 }
 .container {
   display: flex;
-  flex:1;
   flex-direction: column;
+  height: fit-content;
   align-items: center;
   margin: 0 0 2rem;
   padding: 1rem 2rem;
   background: #fff;
   border-radius: 0.75rem;
-  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 30%);
+  box-shadow: 0 0.5rem 1.5rem #edf0f7;
   border: 1px solid #edf0f7;
 }
 ul {
@@ -37,6 +46,8 @@ ul {
 .main {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 14px;
     margin: 25px;
 }
@@ -53,17 +64,22 @@ ul {
 
 .namespaces{
     border-radius: 0.75rem;
-    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 30%);
+    box-shadow: 0 0.5rem 1.5rem #edf0f7;
     border: 1px solid #edf0f7;
     margin-top:20px;
-    width: fit-content;
-}
-
-.code[class*=language-], pre[class*=language-] {
-    width: 500px;
 }
 
 .desc{
-    font-size:12px;
-    text-align: center;
+    font-size: 14px;
+    font-style: italic;
+}
+
+#date{
+    color: black;
+    font-family: Google Sans,Roboto,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 28px;
+    white-space: nowrap;
 }
