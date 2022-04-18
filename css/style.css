@@ -3,6 +3,7 @@ html {
 }
 body {
   text-align: center;
+  background: #F5F5F7;;
 }
 p {
   font-size: 13px;
@@ -35,8 +36,8 @@ header {
   margin: 0 0 2rem;
   padding: 1rem 2rem;
   background: #fff;
-  border-radius: 0.75rem;
-  box-shadow: 0 0.5rem 1.5rem #edf0f7;
+  border-radius: 18px;
+  box-shadow: 2px 4px 12px rgb(0 0 0 / 8%);
   border: 1px solid #edf0f7;
 }
 ul {
@@ -63,9 +64,10 @@ ul {
 
 
 .namespaces{
-    border-radius: 0.75rem;
-    box-shadow: 0 0.5rem 1.5rem #edf0f7;
+    border-radius:18px;
+    box-shadow: 2px 4px 12px rgb(0 0 0 / 8%);
     border: 1px solid #edf0f7;
+    background: #fff;
     margin-top:20px;
 }
 
